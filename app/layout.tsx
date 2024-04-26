@@ -11,9 +11,18 @@ const dmSans = DM_Sans({
 });
 
 const champ = localFont({
-  src: "./fonts/Champ-ExtraBold.woff2",
-  display: "swap",
   variable: "--font-champ",
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/Champ-Medium.woff2",
+      weight: "500",
+    },
+    {
+      path: "./fonts/Champ-ExtraBold.woff2",
+      weight: "800",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
