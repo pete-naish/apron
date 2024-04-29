@@ -1,15 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-import styles from "./page.module.css";
-
-import CloseIcon from "./close-icon";
-import DeleteIcon from "./delete-icon";
+import { User } from "./types";
 import AddIcon from "./add-icon";
+import styles from "./page.module.css";
+import DeleteIcon from "./delete-icon";
+import CloseIcon from "./close-icon";
+import UserForm from "./user-form";
 
-export default function Users() {
+const getUserData = async () => {
+  const res = await fetch("/api/users", {
+    method: "GET",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+};
+
+const UserPage: FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUserId, setSelectedUserId] = useState("");
   const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showEditUserModal, setShowEditUserModal] = useState(false);
+
+  const getUsers = async () => {
+    const users = await getUserData();
+    setUsers(users);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const handleAddUserModalClose = () => {
+    setShowAddUserModal(false);
+  };
+
+  const handleAddUserSubmit = async (user: Omit<User, "id">) => {
+    await fetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify(user),
+    });
+
+    getUsers();
+    handleAddUserModalClose();
+  };
+
+  const handleEditUserModalClose = () => {
+    setShowEditUserModal(false);
+    setSelectedUserId("");
+  };
+
+  const handleEditUserSubmit =
+    (id: string) => async (user: Omit<User, "id">) => {
+      await fetch(`/api/users/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(user),
+      });
+
+      getUsers();
+      handleEditUserModalClose();
+    };
 
   return (
     <>
@@ -17,7 +72,7 @@ export default function Users() {
         <header className={styles.header}>
           <h1>Users</h1>
           <button
-            className={styles.button_cta}
+            className="button_cta"
             onClick={() => setShowAddUserModal(true)}
           >
             <AddIcon />
@@ -35,42 +90,33 @@ export default function Users() {
             </tr>
           </thead>
           <tbody>
-            <tr className={styles.tr}>
-              <td>Male</td>
-              <td>Eric</td>
-              <td>Smith</td>
-              <td>35</td>
-              <td>
-                <div className={styles.row_action_container}>
-                  <button
-                    className={`${styles.button} ${styles.button_secondary} ${styles.button_small}`}
-                  >
-                    Edit
-                  </button>
-                  <button className={styles.icon_button}>
-                    <DeleteIcon />
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr className={styles.tr}>
-              <td>Female</td>
-              <td>Kate</td>
-              <td>Johnson</td>
-              <td>29</td>
-              <td>
-                <div className={styles.row_action_container}>
-                  <button
-                    className={`${styles.button} ${styles.button_secondary} ${styles.button_small}`}
-                  >
-                    Edit
-                  </button>
-                  <button className={styles.icon_button}>
-                    <DeleteIcon />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {users.map((user) => {
+              if (!user) return null;
+              return (
+                <tr key={user.firstName} className={styles.tr}>
+                  <td>{user.gender}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.age}</td>
+                  <td>
+                    <div className={styles.row_action_container}>
+                      <button
+                        className="button button_secondary button_small"
+                        onClick={() => {
+                          setShowEditUserModal(true);
+                          setSelectedUserId(user.id);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button className={styles.icon_button}>
+                        <DeleteIcon />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </main>
@@ -78,60 +124,49 @@ export default function Users() {
         <section className={styles.modal_container}>
           <button
             className={`${styles.modal_close} ${styles.icon_button}`}
-            onClick={() => setShowAddUserModal(false)}
+            onClick={handleAddUserModalClose}
           >
             <CloseIcon />
           </button>
           <div className={styles.modal_content}>
             <div className={styles.form_modal}>
               <h2>Add user</h2>
-              <form className={styles.form}>
-                <label htmlFor="gender" className={styles.form_label}>
-                  Gender
-                  <select value="" id="gender" className={styles.form_input}>
-                    <option value=""></option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </label>
-                <label htmlFor="first_name" className={styles.form_label}>
-                  First name
-                  <input
-                    id="first_name"
-                    type="text"
-                    className={styles.form_input}
-                  />
-                </label>
-                <label htmlFor="last_name" className={styles.form_label}>
-                  Last name
-                  <input
-                    id="last_name"
-                    type="text"
-                    className={styles.form_input}
-                  />
-                </label>
-                <label htmlFor="age" className={styles.form_label}>
-                  Age
-                  <input id="age" type="text" className={styles.form_input} />
-                </label>
-              </form>
-              <div className={styles.form_actions}>
-                <button
-                  className={`${styles.button} ${styles.button_secondary} ${styles.button_medium}`}
-                  onClick={() => setShowAddUserModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className={`${styles.button} ${styles.button_primary}  ${styles.button_medium} ${styles.button_expand}`}
-                >
-                  Add
-                </button>
-              </div>
+              <UserForm
+                submitButtonText="Add"
+                onSubmit={handleAddUserSubmit}
+                onClose={handleAddUserModalClose}
+              />
+            </div>
+          </div>
+        </section>
+      )}
+      {showEditUserModal && selectedUserId && (
+        <section className={styles.modal_container}>
+          <button
+            className={`${styles.modal_close} ${styles.icon_button}`}
+            onClick={handleEditUserModalClose}
+          >
+            <CloseIcon />
+          </button>
+          <div className={styles.modal_content}>
+            <div className={styles.form_modal}>
+              <h2>Edit user</h2>
+              <UserForm
+                // could omit id here and pass in to onSubmit instead?
+                user={users.find((user) => user.id === selectedUserId)}
+                submitButtonText="Save"
+                onClose={handleEditUserModalClose}
+                onSubmit={handleEditUserSubmit(
+                  // make better, extract out to own component so don't have to find twice
+                  users.find((user) => user.id === selectedUserId)?.id || ""
+                )}
+              />
             </div>
           </div>
         </section>
       )}
     </>
   );
-}
+};
+
+export default UserPage;

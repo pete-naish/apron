@@ -2,11 +2,11 @@ This is a [Next.js](https://nextjs.org/) project by Pete Naish for Apron.
 
 ## Getting Started
 
-First, run the development server:
+First install dependencies, then run the development server:
 
 ```bash
-npm install
 nvm use 20.12.2
+npm install
 npm run dev
 
 ```

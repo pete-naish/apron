@@ -10,6 +10,7 @@
   --border-color-tr: #ecebe3;
   --border-color-subtle: #f5f4ed;
   --border-color-input: #dfddd3;
+  --color-error: #cb2525;
 }
 
 * {
@@ -55,4 +56,49 @@ h4 {
 
 h2 {
   font-size: 1.5rem;
+}
+
+.button {
+  font-weight: 700;
+}
+
+.button_primary {
+  color: var(--color-lightest);
+  background-color: var(--background-darkest);
+  border: 2px solid var(--background-darkest);
+  border-radius: 8px;
+}
+
+.button_secondary {
+  color: var(--background-darkest);
+  background-color: var(--color-lightest);
+  border: 2px solid var(--border-color-tr);
+  border-radius: 8px;
+}
+
+.button_cta {
+  color: var(--color-lightest);
+  background-color: var(--background-darkest);
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 20px; /* use variable */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.814rem 1.25rem;
+  line-height: 1;
+}
+
+.button_small {
+  font-size: 0.875rem;
+  padding: 0.3128rem 1rem;
+}
+
+.button_medium {
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+}
+
+.button_expand {
+  flex: auto;
 }
