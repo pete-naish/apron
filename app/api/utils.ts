@@ -1,5 +1,6 @@
 import { User } from "@/app/types";
 import { v4 as uuidV4 } from "uuid";
+import { revalidatePath } from "next/cache";
 
 import { users } from "./data";
 
@@ -17,6 +18,7 @@ export function updateUser(
   if (userIndex === -1) return undefined;
   const updatedUser = { ...users[userIndex], ...update };
   users[userIndex] = updatedUser;
+  revalidatePath("/");
   return updatedUser;
 }
 
@@ -24,6 +26,7 @@ export function deleteUser(id: string): boolean {
   const userIndex = users.findIndex((user) => user.id === id);
   if (userIndex === -1) return false;
   users.splice(userIndex, 1);
+  revalidatePath("/");
   return true;
 }
 

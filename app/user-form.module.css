@@ -14,13 +14,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  color: var(--body-text-color-alt);
+  color: var(--color-body-text-alt);
 }
 
 .form_input {
   border: 2px solid var(--border-color-input);
-  border-radius: 8px; /* TODO variable */
-  font-size: 1rem;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--text-md);
   line-height: 1.25;
   padding: 0.875rem 0.75rem;
 }

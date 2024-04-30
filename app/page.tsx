@@ -26,6 +26,7 @@ const UserPage: FC = () => {
   const [selectedUserId, setSelectedUserId] = useState("");
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showEditUserModal, setShowEditUserModal] = useState(false);
+  const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
 
   const getUsers = async () => {
     const users = await getUserData();
@@ -55,16 +56,29 @@ const UserPage: FC = () => {
     setSelectedUserId("");
   };
 
-  const handleEditUserSubmit =
-    (id: string) => async (user: Omit<User, "id">) => {
-      await fetch(`/api/users/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(user),
-      });
+  const handleEditUserSubmit = async (user: Omit<User, "id">) => {
+    await fetch(`/api/users/${selectedUserId}`, {
+      method: "PATCH",
+      body: JSON.stringify(user),
+    });
 
-      getUsers();
-      handleEditUserModalClose();
-    };
+    getUsers();
+    handleEditUserModalClose();
+  };
+
+  const handleDeleteUserModalClose = () => {
+    setShowDeleteUserModal(false);
+    setSelectedUserId("");
+  };
+
+  const handleDeleteUserSubmit = async () => {
+    await fetch(`/api/users/${selectedUserId}`, {
+      method: "DELETE",
+    });
+
+    getUsers();
+    handleDeleteUserModalClose();
+  };
 
   return (
     <>
@@ -90,33 +104,47 @@ const UserPage: FC = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
-              if (!user) return null;
-              return (
-                <tr key={user.firstName} className={styles.tr}>
-                  <td>{user.gender}</td>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.age}</td>
-                  <td>
-                    <div className={styles.row_action_container}>
-                      <button
-                        className="button button_secondary button_small"
-                        onClick={() => {
-                          setShowEditUserModal(true);
-                          setSelectedUserId(user.id);
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button className={styles.icon_button}>
-                        <DeleteIcon />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+            {Boolean(users.length) ? (
+              users.map((user) => {
+                if (!user) return null;
+                return (
+                  <tr key={user.firstName} className={styles.tr}>
+                    <td>{user.gender}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.age}</td>
+                    <td>
+                      <div className={styles.row_action_container}>
+                        <button
+                          className="button button_secondary button_small"
+                          onClick={() => {
+                            setShowEditUserModal(true);
+                            setSelectedUserId(user.id);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className={styles.icon_button}
+                          onClick={() => {
+                            setShowDeleteUserModal(true);
+                            setSelectedUserId(user.id);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td style={{ padding: "2rem" }} colSpan={5} align="center">
+                  No users found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </main>
@@ -152,15 +180,48 @@ const UserPage: FC = () => {
             <div className={styles.form_modal}>
               <h2>Edit user</h2>
               <UserForm
-                // could omit id here and pass in to onSubmit instead?
                 user={users.find((user) => user.id === selectedUserId)}
                 submitButtonText="Save"
                 onClose={handleEditUserModalClose}
-                onSubmit={handleEditUserSubmit(
-                  // make better, extract out to own component so don't have to find twice
-                  users.find((user) => user.id === selectedUserId)?.id || ""
-                )}
+                onSubmit={handleEditUserSubmit}
               />
+            </div>
+          </div>
+        </section>
+      )}
+      {showDeleteUserModal && selectedUserId && (
+        <section className={styles.modal_container}>
+          <button
+            className={`${styles.modal_close} ${styles.icon_button}`}
+            onClick={handleDeleteUserModalClose}
+          >
+            <CloseIcon />
+          </button>
+          <div className={styles.modal_content}>
+            <div className={styles.form_modal}>
+              <h2 className={styles.title_emphasis}>
+                Are you sure you want to delete user?
+              </h2>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <button
+                  onClick={handleDeleteUserSubmit}
+                  className="button_warning button_bold button_large"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={handleDeleteUserModalClose}
+                  className="button_secondary button_bold button_large"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </section>

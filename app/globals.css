@@ -1,16 +1,32 @@
 :root {
   --max-width: 1100px;
-  --border-radius: 12px;
-  --page-background: #faf9f2;
-  --body-text-color: #000;
-  --body-text-color-alt: #706d5c;
-  --background-darkest: #000;
+
+  --border-radius-sm: 0.5rem; /* 8px */
+  --border-radius-md: 0.75rem; /* 12px */
+  --border-radius-lg: 1rem; /* 16px */
+  --border-radius-xl: 1.25rem; /* 20px */
+
+  --text-sm: 0.875rem; /* 14px */
+  --text-md: 1rem; /* 16px */
+  --text-lg: 1.25rem; /* 20px */
+  --text-xl: 1.5rem; /* 24px */
+  --text-xxl: 2rem; /* 32px */
+
   --color-lightest: #fff;
   --color-subtle: #706d5c;
+  --color-error: #cb2525;
+  --color-warning: #e57171;
+  --color-darkest: #000;
+
+  --color-page-bg: #faf9f2;
+  --color-modal-bg: #01323399;
+
+  --color-body-text: var(--color-darkest);
+  --color-body-text-alt: var(--color-subtle);
+
   --border-color-tr: #ecebe3;
   --border-color-subtle: #f5f4ed;
   --border-color-input: #dfddd3;
-  --color-error: #cb2525;
 }
 
 * {
@@ -28,8 +44,8 @@ body {
 }
 
 body {
-  background-color: var(--page-background);
-  color: var(--body-text-color);
+  color: var(--color-body-text);
+  background-color: var(--color-page-bg);
 }
 
 a {
@@ -38,14 +54,15 @@ a {
 }
 
 button {
-  font-size: 1rem;
+  font-size: var(--text-md);
   cursor: pointer;
 }
 
 h1 {
   font-family: var(--font-champ);
   font-weight: 500;
-  font-size: 2rem;
+  font-size: var(--text-xxl);
+  letter-spacing: 1.2px;
 }
 
 h2,
@@ -55,7 +72,7 @@ h4 {
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: var(--text-xl);
 }
 
 .button {
@@ -64,24 +81,24 @@ h2 {
 
 .button_primary {
   color: var(--color-lightest);
-  background-color: var(--background-darkest);
-  border: 2px solid var(--background-darkest);
-  border-radius: 8px;
+  background-color: var(--color-darkest);
+  border: 2px solid var(--color-darkest);
+  border-radius: var(--border-radius-sm);
 }
 
 .button_secondary {
-  color: var(--background-darkest);
+  color: var(--color-darkest);
   background-color: var(--color-lightest);
   border: 2px solid var(--border-color-tr);
-  border-radius: 8px;
+  border-radius: var(--border-radius-sm);
 }
 
 .button_cta {
   color: var(--color-lightest);
-  background-color: var(--background-darkest);
-  font-size: 0.875rem;
+  background-color: var(--color-darkest);
   border: none;
-  border-radius: 20px; /* use variable */
+  border-radius: var(--border-radius-xl);
+  font-size: var(--text-sm);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -89,14 +106,34 @@ h2 {
   line-height: 1;
 }
 
+.button_warning {
+  color: var(--color-lightest);
+  background-color: var(--color-warning);
+  border: 2px solid var(--color-warning);
+}
+
+.button_bold {
+  font-family: var(--font-champ);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  line-height: 1;
+  border-radius: var(--border-radius-md);
+}
+
 .button_small {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   padding: 0.3128rem 1rem;
 }
 
 .button_medium {
-  font-size: 1rem;
+  font-size: var(--text-md);
   padding: 0.75rem 1.25rem;
+}
+
+.button_large {
+  font-size: var(--text-lg);
+  padding: 1.25rem 2rem;
 }
 
 .button_expand {
