@@ -4,28 +4,25 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import styles from "./user-form.module.css";
-import { Gender, User } from "./types";
+import { EditableUser, Gender, User } from "./types";
 
 interface UserFormProps {
   user?: Omit<User, "id">;
-  // user?: User;
   submitButtonText: string;
   onSubmit: (data: Omit<User, "id">) => void;
   onClose: () => void;
 }
 
-const EMPTY_USER: Omit<User, "id"> = {
-  // id: undefined,
-  gender: Gender.Male, // TODO make blank
+const EMPTY_USER: EditableUser = {
+  gender: null,
   firstName: "",
   lastName: "",
-  age: 0, // TODO make blank
+  age: null,
 };
 
 const userSchema = yup
   .object()
   .shape({
-    // id: yup.string().nullable(),
     gender: yup
       .string()
       .oneOf(Object.values(Gender), "Please select a gender from the list")
@@ -70,14 +67,11 @@ const UserForm: FC<UserFormProps> = ({
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
-    defaultValues: user || EMPTY_USER,
+    defaultValues: user || (EMPTY_USER as User),
     resolver: yupResolver(userSchema),
   });
-
-  // console.log({ user });
 
   return (
     <>

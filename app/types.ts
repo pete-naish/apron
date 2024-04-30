@@ -12,11 +12,8 @@ export type User = {
 };
 
 export type EditableUser = {
-  // TODO make this work
   gender: Gender | null;
   firstName: string;
   lastName: string;
   age: number | null;
 };
-
-// export type EditableUser = Partial<User>;
