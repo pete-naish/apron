@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "playwright test --ui"
+    "test": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
