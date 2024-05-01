@@ -1,0 +1,33 @@
+.modal_backdrop {
+  background-color: var(--color-modal-bg);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_container {
+  min-height: 220px;
+  min-width: 32rem;
+  border-radius: var(--border-radius-lg);
+  background-color: var(--color-lightest);
+  padding: 2rem;
+  margin: 1rem;
+}
+
+.modal_content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.modal_close {
+  position: fixed;
+  top: 2rem;
+  margin-left: 40rem;
+}

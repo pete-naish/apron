@@ -1,0 +1,30 @@
+.table {
+  background: #fff;
+  border: 1px solid var(--border-color-subtle);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem 2rem;
+  border-spacing: 0;
+}
+
+.th {
+  color: var(--color-body-text-alt);
+  font-weight: 400;
+  text-align: left;
+  padding: 1rem 0;
+}
+
+.td {
+  border-top: 1px solid var(--border-color-tr);
+  padding: 1.5rem 0;
+}
+
+.row_action_container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.no_results {
+  padding: 2rem;
+}
