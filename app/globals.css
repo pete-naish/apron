@@ -84,6 +84,10 @@ h2 {
   background-color: var(--color-darkest);
   border: 2px solid var(--color-darkest);
   border-radius: var(--border-radius-sm);
+  transition: background-color 0.2s linear;
+  &:hover {
+    background-color: hsl(from var(--color-darkest) h s calc(l + 0.2));
+  }
 }
 
 .button_secondary {
@@ -91,6 +95,10 @@ h2 {
   background-color: var(--color-lightest);
   border: 2px solid var(--border-color-tr);
   border-radius: var(--border-radius-sm);
+  transition: background-color 0.2s linear;
+  &:hover {
+    background-color: hsl(from var(--color-lightest) h s calc(l - 0.05));
+  }
 }
 
 .button_cta {
@@ -104,12 +112,20 @@ h2 {
   gap: 0.5rem;
   padding: 0.814rem 1.25rem;
   line-height: 1;
+  transition: background-color 0.2s linear;
+  &:hover {
+    background-color: hsl(from var(--color-darkest) h s calc(l + 0.2));
+  }
 }
 
 .button_warning {
   color: var(--color-lightest);
   background-color: var(--color-warning);
   border: 2px solid var(--color-warning);
+  transition: background-color 0.2s linear;
+  &:hover {
+    background-color: hsl(from var(--color-warning) h s calc(l - 0.1));
+  }
 }
 
 .button_bold {
