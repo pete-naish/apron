@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project by Pete Naish for Apron.
 
-I used Next JS so that the mocked backend can be colocated with front end code, without the need for a database. However, this may cause some weirdness and it may be necessary to restart the dev server sometimes.
+I used Next JS so that the mocked backend can be colocated with front end code, without the need for a database.
 
 ## Getting Started
 
@@ -23,4 +23,4 @@ npm run lint
 
 ### Testing
 
-Before running tests, please close the project in any browser windows, restart the dev server using `npm run dev`, and in another terminal window run `npm run test`.
+Before running tests, for best results, please close the project in any browser windows, restart the dev server using `npm run dev`, and in another terminal window run `npm run test`.

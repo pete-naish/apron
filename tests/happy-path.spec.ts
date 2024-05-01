@@ -60,9 +60,9 @@ test.describe("Apron users", async () => {
 
   test("Deleting a user", async ({ page }) => {
     await page
-      .getByRole("row", { name: "Male Eric Smith 35 Edit" })
+      .getByRole("row", { name: "Female Kate Johnson 29 Edit" })
       .getByRole("button")
-      .last()
+      .nth(1)
       .click();
 
     await page.getByRole("button", { name: "Delete", exact: true }).click();
