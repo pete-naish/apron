@@ -23,4 +23,4 @@ npm run lint
 
 ### Testing
 
-Before running tests, for best results, please close the project in any browser windows, restart the dev server using `npm run dev`, and in another terminal window run `npm run test`.
+Before running tests, for best results please close the project in any browser windows, restart the dev server using `npm run dev`, and in another terminal window run `npm run test`.
