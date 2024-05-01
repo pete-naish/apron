@@ -1,6 +1,6 @@
 import { Gender, User } from "../types";
 
-export let users: User[] = [
+const initialUsers: User[] = [
   {
     id: "4dfd3842-f146-4bed-937f-610bf2eabecc",
     gender: Gender.Male,
@@ -37,3 +37,9 @@ export let users: User[] = [
     age: 27,
   },
 ];
+
+export let users: User[] = [...initialUsers];
+
+export function resetUsers() {
+  users = [...initialUsers];
+}

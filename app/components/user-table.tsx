@@ -33,7 +33,7 @@ const UserTable: FC<UserTableProps> = ({
             if (!user) return null;
 
             return (
-              <tr key={user.firstName}>
+              <tr key={user.id}>
                 <td className={styles.td}>{user.gender}</td>
                 <td className={styles.td}>{user.firstName}</td>
                 <td className={styles.td}>{user.lastName}</td>

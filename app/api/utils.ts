@@ -2,7 +2,7 @@ import { User } from "@/app/types";
 import { v4 as uuidV4 } from "uuid";
 import { revalidatePath } from "next/cache";
 
-import { users } from "./data";
+import { resetUsers, users } from "./data";
 
 export function createUser(user: Omit<User, "id">): User {
   const newUser = { ...user, id: uuidV4() };
@@ -36,4 +36,8 @@ export function getUser(id: string): User | undefined {
 
 export function getAllUsers(): User[] {
   return users;
+}
+
+export function resetAllUsers(): void {
+  return resetUsers();
 }

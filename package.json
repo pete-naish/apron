@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "playwright test --ui"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -19,13 +20,13 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.43.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.8",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
-    "playwright": "^1.43.1",
     "typescript": "^5"
   }
 }
