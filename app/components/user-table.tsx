@@ -29,31 +29,27 @@ const UserTable: FC<UserTableProps> = ({
       </thead>
       <tbody>
         {Boolean(users?.length) ? (
-          users?.map((user) => {
-            if (!user) return null;
-
-            return (
-              <tr key={user.id}>
-                <td className={styles.td}>{user.gender}</td>
-                <td className={styles.td}>{user.firstName}</td>
-                <td className={styles.td}>{user.lastName}</td>
-                <td className={styles.td}>{user.age}</td>
-                <td className={styles.td}>
-                  <div className={styles.row_action_container}>
-                    <button
-                      className="button button_secondary button_small"
-                      onClick={() => onEditClick(user.id)}
-                    >
-                      Edit
-                    </button>
-                    <IconButton onClick={() => onDeleteClick(user.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </div>
-                </td>
-              </tr>
-            );
-          })
+          users?.map((user) => (
+            <tr key={user.id}>
+              <td className={styles.td}>{user.gender}</td>
+              <td className={styles.td}>{user.firstName}</td>
+              <td className={styles.td}>{user.lastName}</td>
+              <td className={styles.td}>{user.age}</td>
+              <td className={styles.td}>
+                <div className={styles.row_action_container}>
+                  <button
+                    className="button button_secondary button_small"
+                    onClick={() => onEditClick(user.id)}
+                  >
+                    Edit
+                  </button>
+                  <IconButton onClick={() => onDeleteClick(user.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
+              </td>
+            </tr>
+          ))
         ) : (
           <tr>
             <td className={styles.no_results} colSpan={5} align="center">
